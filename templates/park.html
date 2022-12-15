@@ -1,0 +1,120 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container-fluid" id="outer">
+        {% if error %}
+            <p>Sorry, {{parkCode.upper()}} is an invalid park code.</p>
+            <p>Please double check the park code and try again.</p>
+        {% else %}
+            <div class="row">
+                <div class="col">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner text-center">
+                            <div class="carousel-item active">
+                                <div class="d-flex justify-content-center">
+                                    <img src="{{parkInfo.images[0].url}}" class="d-block" alt="{{parkInfo.images[0].altText}}" height="650">
+                                </div>
+                            </div>
+                            {% for i in range(1, parkInfo.images|length) %}
+                                <div class="carousel-item">
+                                    <div class="d-flex justify-content-center">
+                                        <img src="{{parkInfo.images[i].url}}" class="d-block" alt="{{parkInfo.images[i].altText}}" height="650">
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="d-flex align-items-center">
+                            <h1>{{ parkInfo.fullName }}</h1>
+                        </div>
+                    </div>
+                    <div class="col d-flex align-items-end">
+                        <h3>{{ parkInfo.address }}</h3>
+                    </div>
+                </div>
+    
+                <div class="row mt-3">
+                    <div class="col">
+                        <h4>{{ parkInfo.description }}</h4>
+                    </div>
+                </div>
+    
+                
+                <div class="row mt-3">
+                    <div class="col">
+                        <h4>Forecasts:</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for forecast in forecasts %}
+                        <div class="col">
+                            <strong>{{ forecasts[forecast].datef }}:</strong>
+                            <p>
+                                {{ forecasts[forecast].description.capitalize() }} <br>
+                                Temperature: {{ forecasts[forecast].temp }}&#8457 <br>
+                                Humidity: {{ forecasts[forecast].humidity }}% <br>
+                                Wind speed: {{ forecasts[forecast].windSpeed }} MPH
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+    
+    
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="row">
+                            <h4>Activities:</h4>
+                        </div>
+                        <div class="row">
+                            {% for i in range(0, parkInfo.activitiesShort|length, 10) %}
+                                <div class="col">
+                                    <ul>
+                                        {% if i+10 > parkInfo.activitiesShort|length %}
+                                            {% for j in range(i, parkInfo.activitiesShort|length) %}
+                                                <li>{{ parkInfo.activitiesShort[j] }}</li>
+                                            {% endfor %}
+                                        {% else %}
+                                            {% for j in range(i, i+10) %}
+                                                <li>{{ parkInfo.activitiesShort[j] }}</li>
+                                            {% endfor %}
+                                        {% endif%}
+                                    </ul>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+    
+                    <div class="col">
+                        <div class="row">
+                            <h4>Current weather:</h4>
+                            <p>
+                                Temperature: {{ parkInfo.temperature }}&#8457 <br>
+                                Humidity: {{ parkInfo.humidity }}% <br>
+                                Wind speed: {{ parkInfo.windSpeed }} MPH <br>
+                                Air quality: {{ parkInfo.AQI }}
+                            </p>
+                        </div>
+                        <div class="row mt-3">
+                            <h4>Find out more information <a href='{{ parkInfo.url }}'>here</a></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+        {% endif %}
+    </div>
+{% endblock content %}

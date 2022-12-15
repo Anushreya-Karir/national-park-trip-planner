@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block content %}
+<body id="home-body">
+    <div class="container-fluid text-center">
+        <div class="center-vertical">
+            <h1>What national park do you want to see?</h1>
+
+            <form action="search" method="post">
+                <p>Enter the park name and state code here:</p>
+                <input type="text" placeholder="Ex: Yellowstone" name="query">
+                <input type="text" maxlength="2" placeholder="Ex: CA" name="state">
+                <input type="submit" value="Search">
+            </form>
+        </div>
+    </div>
+</body>
+{% endblock content %}

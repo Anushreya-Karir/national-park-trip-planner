@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container-fluid text-center">
+        {% if error %}
+            <p>Sorry, there were no search results for {{query}}.</p>
+            <p>Please return to the home page and try again.</p>
+        {% else %}
+            <h3>Enter the park code of the park you want</h3>
+            <h5>(Park codes can also be found in the Parks tab)</h5>
+
+            <form action="park" method="post">
+                <input type="text" maxlength="4" placeholder="Ex: MORA (Mt. Rainer)" name="parkCode">
+                <input type="submit" value="Submit">
+            </form>
+
+            <br><br>
+
+            <h3>Search Results:</h3>
+
+            <br>
+
+            {% for code in parks %}
+                <img src='{{ parks[code].url }}' alt='Image for {{ parks[code].name }}' height='150'/>
+                <h3><a href="/parkbycode?parkCode={{ code }}">{{parks[code].name}} : {{code.upper()}}</a></h3>
+                <br>
+            {% endfor %}
+        {% endif %}
+    </div> 
+{% endblock content %}

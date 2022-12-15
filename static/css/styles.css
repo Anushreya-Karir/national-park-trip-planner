@@ -1,0 +1,20 @@
+#home-body {
+    background-image: url('../images/home_bg_image.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: black;
+}
+
+.center-vertical {
+    margin-top: 20%;
+    color: white;
+}
+
+#carouselExampleControls {
+    background-color: black;
+}
+
+#outer {
+    padding: 0;
+}

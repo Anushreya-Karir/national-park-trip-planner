@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container-fluid text-center">
+        {% for parkcode in parkCodes %}
+            <img src='{{ parkCodes[parkcode].url }}' alt='Image for {{ parkCodes[parkcode].name }}' height='150'/>
+            <h3><a href="/parkbycode?parkCode={{ parkcode }}">{{parkCodes[parkcode].name}} : {{parkcode.upper()}}</a></h3>
+        {% endfor %}
+    </div>
+{% endblock content %}
