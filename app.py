@@ -40,7 +40,7 @@ def park_page():
         if parkInfo['lat'] and parkInfo['lng']:
             forecasts = get_forecasts(parkInfo['lat'], parkInfo['lng'])
             weather = get_weather(parkInfo['lat'], parkInfo['lng'])
-            
+
         return render_template('park.html', parkInfo=parkInfo, parkCode=parkCode, forecasts=forecasts, weather=weather, error=False)
     else:
         return render_template('park.html', parkCode=parkCode, error=True)
@@ -48,10 +48,14 @@ def park_page():
 @app.route("/parkbycode")
 def parkbycode_page():
     parkCode = str(request.args.get('parkCode'))
-
     parkInfo = get_park_info(parkCode)
-    forecasts = get_forecasts(parkInfo['lat'], parkInfo['lng'])
-    return render_template('park.html', parkInfo=parkInfo, parkCode=parkCode, forecasts=forecasts, error=False)
+    forecasts, weather = 0, 0
+        
+    if parkInfo['lat'] and parkInfo['lng']:
+        forecasts = get_forecasts(parkInfo['lat'], parkInfo['lng'])
+        weather = get_weather(parkInfo['lat'], parkInfo['lng'])
+
+    return render_template('park.html', parkInfo=parkInfo, parkCode=parkCode, forecasts=forecasts, weather=weather, error=False)
 
 
 if __name__ == "__main__":
