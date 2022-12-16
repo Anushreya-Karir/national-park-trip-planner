@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from backend import get_parks, get_park_info, get_forecasts
+from backend import get_parks, get_park_info, get_forecasts, get_weather
 
 app = Flask(__name__)
 app.secret_key = "kaR20rhQL22"
@@ -35,8 +35,13 @@ def park_page():
 
     if parkCode in parks:
         parkInfo = get_park_info(parkCode)
-        forecasts = get_forecasts(parkInfo['lat'], parkInfo['lng'])
-        return render_template('park.html', parkInfo=parkInfo, parkCode=parkCode, forecasts=forecasts, error=False)
+        forecasts, weather = 0, 0
+        
+        if parkInfo['lat'] and parkInfo['lng']:
+            forecasts = get_forecasts(parkInfo['lat'], parkInfo['lng'])
+            weather = get_weather(parkInfo['lat'], parkInfo['lng'])
+            
+        return render_template('park.html', parkInfo=parkInfo, parkCode=parkCode, forecasts=forecasts, weather=weather, error=False)
     else:
         return render_template('park.html', parkCode=parkCode, error=True)
 

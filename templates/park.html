@@ -59,17 +59,21 @@
                     </div>
                 </div>
                 <div class="row">
-                    {% for forecast in forecasts %}
-                        <div class="col">
-                            <strong>{{ forecasts[forecast].datef }}:</strong>
-                            <p>
-                                {{ forecasts[forecast].description.capitalize() }} <br>
-                                Temperature: {{ forecasts[forecast].temp }}&#8457 <br>
-                                Humidity: {{ forecasts[forecast].humidity }}% <br>
-                                Wind speed: {{ forecasts[forecast].windSpeed }} MPH
-                            </p>
-                        </div>
-                    {% endfor %}
+                    {% if forecasts %}
+                        {% for forecast in forecasts %}
+                            <div class="col">
+                                <strong>{{ forecasts[forecast].datef }}:</strong>
+                                <p>
+                                    {{ forecasts[forecast].description.capitalize() }} <br>
+                                    Temperature: {{ forecasts[forecast].temp }}&#8457 <br>
+                                    Humidity: {{ forecasts[forecast].humidity }}% <br>
+                                    Wind speed: {{ forecasts[forecast].windSpeed }} MPH
+                                </p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                            <p>Current weather data at this location cannot be retrieved right now</p>
+                    {% endif %}
                 </div>
     
     
@@ -101,10 +105,14 @@
                         <div class="row">
                             <h4>Current weather:</h4>
                             <p>
-                                Temperature: {{ parkInfo.temperature }}&#8457 <br>
-                                Humidity: {{ parkInfo.humidity }}% <br>
-                                Wind speed: {{ parkInfo.windSpeed }} MPH <br>
-                                Air quality: {{ parkInfo.AQI }}
+                                {% if weather %}
+                                    Temperature: {{ weather.temperature }}&#8457 <br>
+                                    Humidity: {{ weather.humidity }}% <br>
+                                    Wind speed: {{ weather.windSpeed }} MPH <br>
+                                    Air quality: {{ weather.AQI }}
+                                {% else %}
+                                    Current weather data at this location cannot be retrieved right now
+                                {% endif %}
                             </p>
                         </div>
                         <div class="row mt-3">

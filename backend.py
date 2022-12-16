@@ -55,8 +55,7 @@ def get_parks(n, query='', state=''):
 # Returns a dictionary with information about that park
 # { 'url':string, 'fullName':string, 'description':string, 'lat':float, 'lng':float,
 #   'activitiesFull':list of strings, 'images':[{ 'url':string, 'altText':string }], 'address':string,
-#   'activitiesShort':list of 20, 'temperature':int(farenheit), 'humidity':int(%), 
-#   'windSpeed':int(mph), 'AQI':int }
+#   'activitiesShort':list of 20 }
 def get_park_info(parkCode):
     params = { 'parkCode':parkCode, 'limit':1, 'api_key':api_keys.NPS_API_KEY }
     request_url = baseurl + '?' + urllib.parse.urlencode(params)
@@ -70,8 +69,13 @@ def get_park_info(parkCode):
         info['url'] = data['url']
         info['fullName'] = data['fullName']
         info['description'] = data['description']
-        info['lat'] = float(data['latitude'])
-        info['lng'] = float(data['longitude'])
+        
+        if data['latitude'] and data['longitude']:
+            info['lat'] = float(data['latitude'])
+            info['lng'] = float(data['longitude'])
+        else:
+            info['lat'] = 0
+            info['lng'] = 0
         
         activities = []
         for activity in data['activities']:
@@ -93,8 +97,6 @@ def get_park_info(parkCode):
         address = "{}, {}, {} {}".format(
             addrData['line1'], addrData['city'], addrData['stateCode'], addrData['postalCode'])
         info['address'] = address
-
-        info.update(get_weather(info['lat'], info['lng']))
 
         return info
 
